@@ -6,4 +6,4 @@ spring:
     config:
       server:
         git:
-          uri: ${HOME}/IdeaProjects/configs
+          uri: https://github.com/andrewtobilko/xxx-config
