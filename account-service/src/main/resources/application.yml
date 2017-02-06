@@ -2,8 +2,6 @@ server:
   port: 8000
 
 spring:
-  application:
-    name: account-service
   data:
     rest:
       basePath: /api
@@ -21,10 +19,6 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         show-sql: true
         format_sql: true
-  cloud:
-    config:
-      uri: http://localhost:8888
-      fail-fast: true
 
 logging:
   level:

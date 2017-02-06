@@ -7,3 +7,5 @@ spring:
       server:
         git:
           uri: git@github.com:andrewtobilko/xxx-config.git
+    discovery:
+      enabled: true
