@@ -16,14 +16,4 @@ public class AccountService {
         SpringApplication.run(AccountService.class, args);
     }
 
-    @Bean
-    public ApplicationRunner run(@Autowired AccountRepository repository) {
-        return args -> {
-            Account account = new Account(new AccountCredentials("a", "b"));
-
-            repository.save(account);
-
-        };
-    }
-
 }
