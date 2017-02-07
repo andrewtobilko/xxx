@@ -1,24 +1,24 @@
 buildscript {
-	ext {
-		springBootVersion = '2.0.0.BUILD-SNAPSHOT'
-	}
+
 	repositories {
 		mavenCentral()
 		maven { url "https://repo.spring.io/snapshot" }
 		maven { url "https://repo.spring.io/milestone" }
 	}
+
 	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.0.0.BUILD-SNAPSHOT'
 	}
+
 }
 
 apply plugin: 'java'
-apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 
-jar {
-	baseName = 'account-service'
-	version = '0.0.1-SNAPSHOT'
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.boot.experimental:spring-boot-dependencies-web-reactive:0.1.0.BUILD-SNAPSHOT"
+	}
 }
 
 repositories {
@@ -27,27 +27,36 @@ repositories {
 	maven { url "https://repo.spring.io/milestone" }
 }
 
-
 dependencies {
-//	compile('org.springframework.boot:spring-boot-starter-aop')
-	compile('org.springframework.boot:spring-boot-starter-data-jpa')
-	compile('org.springframework.boot:spring-boot-starter-data-rest')
-//	compile('org.springframework.boot.experimental:spring-boot-starter-web-reactive')
-//	compile('org.springframework.boot:spring-boot-starter-security')
-	compile('org.springframework.boot:spring-boot-starter-social-facebook')
-	compile('org.springframework.boot:spring-boot-starter-social-linkedin')
-	compile('org.springframework.boot:spring-boot-starter-social-twitter')
-//	compile('org.springframework.boot:spring-boot-starter-validation')
-//	compile('org.springframework.boot:spring-boot-starter-web')
-//	compile('org.springframework.boot:spring-boot-starter-websocket')
-	runtime('org.postgresql:postgresql')
-	compileOnly('org.projectlombok:lombok')
-//	testCompile('org.springframework.boot:spring-boot-starter-test')
-//	testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')
+	compile 'org.springframework.boot:spring-boot-starter-aop',
+			'org.springframework.boot:spring-boot-starter-data-jpa',
+			'org.springframework.boot:spring-boot-starter-data-rest',
+			'org.springframework.boot:spring-boot-starter-security',
+			'org.springframework.boot:spring-boot-starter-social-facebook',
+			'org.springframework.boot:spring-boot-starter-social-linkedin',
+			'org.springframework.boot:spring-boot-starter-social-twitter',
+			'org.springframework.boot:spring-boot-starter-validation',
+			'org.springframework.boot:spring-boot-starter-web',
+			'org.springframework.boot:spring-boot-starter-websocket'
+
+	compileOnly 'org.projectlombok:lombok'
+
+	testCompile 'org.springframework.boot:spring-boot-starter-test',
+				'org.springframework.restdocs:spring-restdocs-mockmvc'
 }
 
-dependencyManagement {
-	imports {
-		mavenBom "org.springframework.boot.experimental:spring-boot-dependencies-web-reactive:0.1.0.BUILD-SNAPSHOT"
-	}
+// 'gradle bootRun -Pproduction' will run the production mode, otherwise there will be started the development one
+bootRun {
+	def profile = project.hasProperty('production') ? 'production' : 'development',
+		importFrom = 'profiles/{}.gradle'
+
+	println 'Trying to set the Spring profile...'
+	systemProperty 'spring.profiles.active', profile
+
+	apply from: importFrom.replace('{}', profile)
+}
+
+jar {
+	baseName = 'account-service'
+	version = '0.0.1'
 }
