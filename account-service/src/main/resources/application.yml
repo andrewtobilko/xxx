@@ -1,6 +1,7 @@
 server:
   port: 8000
-
+  tomcat:
+    basedir: /spring-boot-tomcat
 spring:
   data:
     rest:
