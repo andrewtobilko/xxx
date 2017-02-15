@@ -3,6 +3,7 @@ package com.tobilko.entity;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,6 +21,9 @@ public class AccountCredentials {
     private Long id;
 
     private @NonNull String login;
-    private @NonNull String password;
+
+    @NonNull
+    @Length
+    private String password;
 
 }
