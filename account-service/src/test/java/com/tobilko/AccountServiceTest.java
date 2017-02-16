@@ -12,12 +12,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class AccountServiceTest {
 
-    @NonNull
-    @Autowired
-    private final TestRestTemplate client;
+    private final @NonNull TestRestTemplate client;
 
     public @Test void login() {}
     public @Test void logout() {}
